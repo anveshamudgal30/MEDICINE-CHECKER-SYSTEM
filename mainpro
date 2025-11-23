@@ -1,0 +1,176 @@
+# -----------------------------------------------------------
+#                  MEDICINE CHECKER SYSTEM
+# -----------------------------------------------------------
+# Sample medicine database
+medicines = {
+    "medomol": {
+        "dosage": "Adults: 500mg every 6 hours (max 4g/day)",
+        "precautions": "Avoid alcohol; liver patients be cautious",
+        "uses": "Fever, headache, mild pain relief",
+        "availability": "In stock",
+        "side_effects": "Nausea, rash, liver damage (high dose)"
+    },
+    "zyrtec": {
+        "dosage": "Adults: 10mg once daily",
+        "precautions": "Avoid driving after taking dose",
+        "uses": "Allergy, cold symptoms",
+        "availability": "In stock",
+        "side_effects": "Drowsiness, dry mouth"
+    },
+    "nurofen": {
+        "dosage": "Adults: 400mg every 6–8 hours",
+        "precautions": "Avoid if stomach ulcer or kidney issues",
+        "uses": "Pain relief, inflammation, swelling",
+        "availability": "Low stock",
+        "side_effects": "Stomach pain, heartburn, dizziness"
+    }
+}
+# -----------------------------------------------------------
+# Function: Search Medicine
+# -----------------------------------------------------------
+def search_medicine(name):
+    name = name.lower()
+
+    if name in medicines:
+        med = medicines[name]
+
+        print("\n----------------------------------")
+        print("        MEDICINE DETAILS")
+        print("----------------------------------")
+        print(f"Name: {name.capitalize()}")
+        print(f"Uses: {med['uses']}")
+        print(f"Dosage: {med['dosage']}")
+        print(f"Side Effects: {med['side_effects']}")
+        print(f"Precautions: {med['precautions']}")
+        print(f"Availability: {med['availability']}")
+        print("----------------------------------")
+
+    else:
+        print("❌ Medicine not found in the database.")
+# -----------------------------------------------------------
+# Function: Add New Medicine
+# -----------------------------------------------------------
+def add_medicine():
+    print("\n--- Adding New Medicine ---")
+    name = input("Enter medicine name: ").lower()
+
+    if name in medicines:
+        print("⚠ This medicine already exists!")
+        return
+
+    uses = input("Enter its uses: ")
+    dosage = input("Enter recommended dosage: ")
+    side_effects = input("Enter possible side effects: ")
+    precautions = input("Enter precautions: ")
+    availability = input("Enter availability (In stock/Low stock/Out of stock): ")
+
+    medicines[name] = {
+        "uses": uses,
+        "dosage": dosage,
+        "side_effects": side_effects,
+        "precautions": precautions,
+        "availability": availability
+    }
+
+    print("✔ Medicine added successfully!")
+# -----------------------------------------------------------
+# Function: Update Medicine
+# -----------------------------------------------------------
+def update_medicine():
+    print("\n--- Update Medicine Information ---")
+    name = input("Enter medicine name to update: ").lower()
+
+    if name not in medicines:
+        print("❌ Medicine not found.")
+        return
+
+    print("Leave a field blank if you do NOT want to update it.")
+
+    uses = input("New uses: ")
+    dosage = input("New dosage: ")
+    side_effects = input("New side effects: ")
+    precautions = input("New precautions: ")
+    availability = input("New availability: ")
+
+    if uses:
+        medicines[name]["uses"] = uses
+    if dosage:
+        medicines[name]["dosage"] = dosage
+    if side_effects:
+        medicines[name]["side_effects"] = side_effects
+    if precautions:
+        medicines[name]["precautions"] = precautions
+    if availability:
+        medicines[name]["availability"] = availability
+
+    print("✔ Medicine updated successfully!")
+# -----------------------------------------------------------
+# Function: Remove Medicine
+# -----------------------------------------------------------
+def remove_medicine():
+    print("\n--- Remove Medicine ---")
+    name = input("Enter medicine name to remove: ").lower()
+
+    if name in medicines:
+        del medicines[name]
+        print("✔ Medicine removed successfully.")
+    else:
+        print("❌ Medicine not found in database.")
+# -----------------------------------------------------------
+# Function: Show All Medicines
+# -----------------------------------------------------------
+def show_all_medicines():
+    print("\n----------------------------------")
+    print("       LIST OF ALL MEDICINES")
+    print("----------------------------------")
+
+    if not medicines:
+        print("No medicines available.")
+        return
+
+    for med in medicines:
+        print(f"- {med.capitalize()}")
+
+    print("----------------------------------")
+# -----------------------------------------------------------
+# MAIN MENU LOOP
+# -----------------------------------------------------------
+def main():
+    while True:
+        print("\n======================================")
+        print("          MEDICINE CHECKER SYSTEM")
+        print("======================================")
+        print("1. Search Medicine")
+        print("2. Add New Medicine")
+        print("3. Update Existing Medicine")
+        print("4. Remove Medicine")
+        print("5. Show All Medicines")
+        print("6. Exit")
+        print("======================================")
+
+        choice = input("Enter your choice (1–6): ")
+
+        if choice == "1":
+            med_name = input("Enter medicine name to search: ")
+            search_medicine(med_name)
+
+        elif choice == "2":
+            add_medicine()
+
+        elif choice == "3":
+            update_medicine()
+
+        elif choice == "4":
+            remove_medicine()
+
+        elif choice == "5":
+            show_all_medicines()
+
+        elif choice == "6":
+            print("\nExiting system... Stay safe!")
+            break
+
+        else:
+            print("❌ Invalid choice! Please try again.")
+# Run the system
+main()
